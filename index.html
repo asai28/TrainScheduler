@@ -13,12 +13,13 @@
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container">
         <div class="jumbotron header">
-            <h1>Train Scheduler</h1>
+            <h1>Train Scheduler</h1><i class="fas fa-train fa-1x"></i>
         </div>
 
         <div id="containerHeader">
@@ -38,7 +39,9 @@
                 <tbody>
                 </tbody>
             </table>
-        </div><br><br>
+        </div>
+        <br>
+        <br>
         <form>
             <div class="form-group" id="containerHeader">
                 Add Train
@@ -64,6 +67,7 @@
 
 
     </div>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -76,6 +80,26 @@
             messagingSenderId: "293682903279"
         };
         firebase.initializeApp(config);
+        var provider = new firebase.auth.GithubAuthProvider();
+        firebase.auth().signInWithRedirect(provider);
+        firebase.auth().getRedirectResult().then(function (result) {
+            if (result.credential) {
+                // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+                var token = result.credential.accessToken;
+                // ...
+            }
+            // The signed-in user info.
+            var user = result.user;
+        }).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
     </script>
     <script src="javascript/app.js" type="text/javascript"></script>
 </body>
