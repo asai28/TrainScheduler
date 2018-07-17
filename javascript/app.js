@@ -6,7 +6,6 @@ $(document).ready(function () {
     var firstTrain = "0:00";
     var frequency = 0;
     var minAway = 0;
-
     $("form").on("submit", function (e) {
         e.preventDefault();
         trainName = $("#trainName").val().trim();
@@ -18,7 +17,7 @@ $(document).ready(function () {
             trainName: trainName,
             destination : destination,
             firstTrain : moment(firstTrain, 'HH:mm').format("hh:mm a"),
-            frequency: frequency
+            frequency: parseInt(frequency)
         });
 
     });
@@ -37,7 +36,7 @@ $(document).ready(function () {
         var tRemainder = diffTime % frequency;
         // Minute Until Train
         minAway = frequency - tRemainder;
-    
+        
         $(".form-control").val("");
         var row = $("<tr>");
         row.append("<td>"+ trainName +"</td>");
@@ -46,5 +45,6 @@ $(document).ready(function () {
         row.append("<td>"+ frequency +"</td>");
         row.append("<td>"+ minAway +"</td>");
         mainContainer.append(row);
-    });
+        
+    });    
 });
