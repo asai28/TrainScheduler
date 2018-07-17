@@ -1,0 +1,42 @@
+#containerHeader{
+    background-color: navy;
+    color : white;
+    width: 100%;
+    padding: 10px 10px;
+}
+
+#display{
+    border: solid navy 1px;
+}
+
+body{
+    background-color: white; 
+}
+
+.header{
+    background-color: navy;
+    color : white;
+    width: 100%;
+    font-size: 32px;
+}
+
+.jumbotron{
+    text-align: center;
+    
+}
+
+form{
+    border: solid navy 1px;
+}
+
+.form-control,label{
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 90%
+}
+
+#submit{
+    background-color: navy;
+    color : white;
+    margin: 0px 10px 10px 10px;
+}
