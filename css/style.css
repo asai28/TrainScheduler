@@ -40,3 +40,7 @@ form{
     color : white;
     margin: 0px 10px 10px 10px;
 }
+
+#deleteRow{
+    margin: 10px 10px;
+}
