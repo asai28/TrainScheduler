@@ -6,6 +6,8 @@ $(document).ready(function() {
   var firstTrain = "0:00";
   var frequency = 0;
   var minAway = 0;
+  var updatedAttr = "";
+  var updatedRowName = "";
   $("form").on("submit", function(e) {
     e.preventDefault();
     trainName = $("#trainName")
@@ -49,32 +51,47 @@ $(document).ready(function() {
 
     $(".form-control").val("");
     var row = $('<tr id="' + snapshot.key + '">');
-    row.append("<td id=\"edit\">" + trainName + "</td>");
-    row.append("<td id=\"edit\">" + destination + "</td>");
-    row.append("<td id=\"edit\">" + firstTrain + "</td>");
-    row.append("<td id=\"edit\">" + frequency + "</td>");
+    row.append('<td id="test" class="trainName">' + trainName + "</td>");
+    row.append('<td id="test" class="destination">' + destination + "</td>");
+    row.append('<td id="test" class="firstTrain">' + firstTrain + "</td>");
+    row.append('<td id="test" class="frequency">' + frequency + "</td>");
     row.append('<td id="minAway">' + minAway + "</td>");
-    row.append("<button id=\"deleteRow\">X</button>");
+    row.append('<button id="deleteRow">X</button>');
     mainContainer.append(row);
     var intervalId = setInterval(function() {
-      var minAway = parseInt(
-        $("#" + snapshot.key + " #minAway").text()
-      );
+      var minAway = parseInt($("#" + snapshot.key + " #minAway").text());
       if (minAway) {
-          console.log(snapshot.key + ": " + minAway);
+        console.log(snapshot.key + ": " + minAway);
         minAway--;
         $("#" + snapshot.key + " #minAway").text("");
-        $("#" + snapshot.key + " #minAway").text(
-          minAway
-        );
+        $("#" + snapshot.key + " #minAway").text(minAway);
       } else {
         clearInterval(intervalId);
       }
     }, 60 * 1000);
-    $("#"+snapshot.key + " #deleteRow").on("click",function(){
-        $("#"+snapshot.key).remove();
-        database.ref("/" + snapshot.key).remove();
+    $("#" + snapshot.key + " #deleteRow").on("click", function() {
+      $("#" + snapshot.key).remove();
+      database.ref("/" + snapshot.key).remove();
+    });
+     
+    $(document.body).on("click", "#test", function() {
+      updatedAttr = $(this).attr("class");
+      updatedRowName = $(this).parent().attr("id");
+      var input = $("<input>", {
+        id: "test",
+        val: $("#test").text(),
+        type: "text"
+      });
+      $(this).replaceWith(input);
+      input.select();
     });
 
+    $(document.body).on("focusout", "#test", function() {
+      console.log(updatedAttr);
+      console.log(updatedRowName);
+      var $span = $("<span id='test'>" + $("#test").val() + " </span>");
+      $("#test").replaceWith($span);
+      database.ref("/"+ updatedRowName + "/" + updatedAttr).set($("#test").text());
+    });
   });
 });
